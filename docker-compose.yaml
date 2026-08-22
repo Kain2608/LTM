@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  # 1. Cấu hình MySQL
+  mysql-db:
+    image: mysql:8.0
+    container_name: poker_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: sesame # Mật khẩu cho tài khoản root
+      MYSQL_DATABASE: poker_online # Tên database tự động tạo
+    ports:
+      - "3306:3306" # Mở cổng 3306 ra ngoài máy tính
+    volumes:
+      # Dòng này cực kỳ quan trọng: Lấy file SQL của bạn bỏ vào thư mục tự động chạy của MySQL
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    restart: unless-stopped
+
+  # 2. Cấu hình Redis (Cho Realtime, Chat, Game State)
+  redis-cache:
+    image: redis:alpine
+    container_name: poker_redis
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
