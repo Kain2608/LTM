@@ -1,7 +1,7 @@
 package com.poker.poker_.controller;
 
 import com.poker.poker_.entity.User;
-import com.poker.poker_.payload.request.UpdateProfileRequest;
+
 import com.poker.poker_.payload.response.MessageResponse;
 import com.poker.poker_.payload.response.UserProfileResponse;
 import com.poker.poker_.security.services.UserDetailsImpl;
@@ -45,26 +45,4 @@ public class ProfileController {
         return ResponseEntity.badRequest().body(new MessageResponse("Error: User not found."));
     }
 
-    @PutMapping("/me")
-    public ResponseEntity<?> updateProfile(@Valid @RequestBody UpdateProfileRequest updateRequest) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-
-        Optional<User> userOptional = userService.findByUsername(userDetails.getUsername());
-
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
-            if (updateRequest.getAvatar() != null && !updateRequest.getAvatar().trim().isEmpty()) {
-                user.setAvatar(updateRequest.getAvatar());
-            }
-            if (updateRequest.getEmail() != null && !updateRequest.getEmail().trim().isEmpty()) {
-                user.setEmail(updateRequest.getEmail());
-            }
-            userService.save(user);
-
-            return ResponseEntity.ok(new MessageResponse("Profile updated successfully!"));
-        }
-
-        return ResponseEntity.badRequest().body(new MessageResponse("Error: User not found."));
-    }
 }
