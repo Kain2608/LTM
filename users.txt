@@ -1,0 +1,4 @@
+admin:admin
+player1:123456
+user1:123456
+minh123:anhminh123
