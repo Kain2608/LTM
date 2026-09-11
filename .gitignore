@@ -1,0 +1,22 @@
+# Build output
+target/
+bin/
+out/
+*.class
+
+# IDE metadata
+.idea/
+.vscode/
+.settings/
+.classpath
+.project
+
+# OS and temporary files
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+*.swp
+
+# Local environment overrides
+.env
